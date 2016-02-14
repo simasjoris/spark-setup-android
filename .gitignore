@@ -37,3 +37,5 @@ proguard/
 # OS X noise
 .DS_Store
 
+*.idea
+*.iml
