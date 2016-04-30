@@ -34,6 +34,7 @@ import io.particle.android.sdk.devicesetup.commands.SetCommand;
 import io.particle.android.sdk.devicesetup.loaders.WifiScanResultLoader;
 import io.particle.android.sdk.devicesetup.model.ScanResultNetwork;
 import io.particle.android.sdk.devicesetup.setupsteps.SetupStepException;
+import io.particle.android.sdk.utils.Config;
 import io.particle.android.sdk.utils.Crypto;
 import io.particle.android.sdk.utils.EZ;
 import io.particle.android.sdk.utils.SoftAPConfigRemover;
@@ -196,7 +197,12 @@ public class DiscoverDeviceActivity extends RequiresWifiScansActivity
         WifiConfiguration wifiConfig = ConnectToApFragment.buildUnsecuredConfig(
                 selectedNetwork.getSsid(), false);
         currentSSID = selectedNetwork.getSsid();
-        connectToSoftAp(wifiConfig);
+        if(Config.STUB) {
+            startActivity(new Intent(DiscoverDeviceActivity.this, SelectNetworkActivity.class));
+            finish();
+        } else {
+            connectToSoftAp(wifiConfig);
+        }
     }
 
     private void connectToSoftAp(WifiConfiguration config) {
